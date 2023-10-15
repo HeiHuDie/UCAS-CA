@@ -40,17 +40,13 @@ module Div(
     reg  [63:0] x_pad;
     reg  [32:0] y_pad;
     reg  [31:0] s_r;
-    reg  [32:0] r_r;    // 当前的余数
+    reg  [32:0] r_r;
     reg  [ 5:0] cnt;
-
-    //确定符号位
     assign sign_s = (x[31]^y[31]) & div_signed;
     assign sign_r = x[31] & div_signed;
     assign abs_x  = (div_signed & x[31]) ? (~x+1'b1): x;
     assign abs_y  = (div_signed & y[31]) ? (~y+1'b1): y;
-    //循环迭代得到商和余数绝对值
     assign div_complete = cnt == 6'd33;
-    //初始化计数器
     always @(posedge div_clk) begin
         if(reset) begin
             cnt <= 6'b0;
@@ -61,17 +57,17 @@ module Div(
                 cnt <= cnt + 1'b1;
         end
     end
-    //准备操作数,counter=0
     always @(posedge div_clk) begin
-        if(reset)
-            {x_pad, y_pad} <= {64'b0, 33'b0};
-        else if(div) begin
-            if(~|cnt)
-                {x_pad, y_pad} <= {32'b0, abs_x, 1'b0, abs_y};
+        if(reset) begin
+            x_pad <= 64'd0;
+            y_pad <= 33'd0;
+        end else if(div) begin
+            if(~|cnt) begin
+                x_pad <= {32'd0,abs_x};
+                y_pad <= {1'd0,abs_y};
+            end
         end
     end
-    
-    //求解当前迭代的减法结果
     assign pre_r = r_r - y_pad;
     assign recover_r = pre_r[32] ? r_r : pre_r;
     always @(posedge div_clk) begin
@@ -91,7 +87,6 @@ module Div(
                 r_r <=  (cnt == 32) ? recover_r : {recover_r, x_pad[31 - cnt]};
         end
     end
-    //调整最终商和余数
     assign s = div_signed & sign_s ? (~s_r+1'b1) : s_r;
     assign r = div_signed & sign_r ? (~r_r+1'b1) : r_r;
 endmodule
