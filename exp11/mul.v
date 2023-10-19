@@ -22,7 +22,7 @@ module Mul(
             end
         end
     end
-    assign mul_complete = cnt == 2'b10;
+    assign mul_complete = cnt == 2'b01;
 
     wire [32:0] ex_x;
     wire [32:0] ex_y;
@@ -81,40 +81,6 @@ module Mul(
             end 
     endgenerate
 
-    reg [16:0] pt_reg [65:0];
-    reg [16:0] c_reg;
-    integer j;
-    always @(posedge mul_clk) begin
-        for (j = 0; j < 66; j = j + 1)
-        begin
-            if (reset) begin
-                pt_reg[j] <= 17'b0;
-            end
-            else if (mul) begin
-                pt_reg[j] <= pt[j];
-            end
-        end
-        if (reset) begin
-            c_reg <= 17'b0;
-        end
-        else if (mul) begin
-            c_reg <= c;
-        end
-    end
-
-    wire [16:0] pt_wire [65:0];
-    wire [16:0] c_wire;
-
-    assign c_wire = c_reg;
-
-    generate
-        for (i = 0; i < 66; i = i + 1)
-        begin
-            assign pt_wire[i] = pt_reg[i];
-        end
-    endgenerate
-    
-
     wire [13:0] wcout [65:0];
     wire [65:0] A;
     wire [66:0] B;
@@ -124,38 +90,34 @@ module Mul(
         begin:w
             if (i == 0) begin
                 Wallace u_Wallace (
-                    .num    (pt_wire[i]),
-                    .cin    (c_wire[13:0]),
-                    .cout   (wcout[i]),
-                    .S      (A[i]),
-                    .C      (B[i + 1])
+                    .mul_clk (mul_clk),
+                    .reset   (reset),
+                    .mul     (mul),
+                    .num     (pt[i]),
+                    .cin     (c[13:0]),
+                    .cout    (wcout[i]),
+                    .S       (A[i]),
+                    .C       (B[i + 1])
                 ); 
             end
             else begin
                 Wallace u_Wallace (
-                    .num    (pt_wire[i]),
-                    .cin    (wcout[i - 1]),
-                    .cout   (wcout[i]),
-                    .S      (A[i]),
-                    .C      (B[i + 1])
+                    .mul_clk (mul_clk),
+                    .reset   (reset),
+                    .mul     (mul),
+                    .num     (pt[i]),
+                    .cin     (wcout[i - 1]),
+                    .cout    (wcout[i]),
+                    .S       (A[i]),
+                    .C       (B[i + 1])
                 ); 
             end
         end
     endgenerate
 
     wire [65:0] product;
-    assign product = A + {B[66:1], c_wire[14]} + c_wire[15];
+    assign product = A + {B[66:1], c[14]} + c[15];
 
-    reg [65:0] product_reg;
-    always @(posedge mul_clk) begin
-        if (reset) begin
-            product_reg <= 66'b0;
-        end
-        else if (mul) begin
-            product_reg <= product;
-        end
-    end
-
-    assign result = product_reg[63:0];
+    assign result = product[63:0];
 
 endmodule

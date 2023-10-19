@@ -1,4 +1,7 @@
 module Wallace(
+    input mul_clk,
+    input reset,
+    input mul,
     input [16:0] num,
     input [13:0] cin,
     output [13:0] cout,
@@ -62,32 +65,50 @@ module Wallace(
         .B      (cin[0]),
         .cin    (cin[1]),
         .S      (in3[2]),
-        .cout   (cout[7])
+        .cout   (cout_wire[0])
     );
     fulladder adder24 (
         .A      (cin[2]),
         .B      (cin[3]),
         .cin    (cin[4]),
         .S      (in3[3]),
-        .cout   (cout[8])
+        .cout   (cout_wire[1])
     );
 
-    wire [1:0] in4;
+    wire [1:0] in4_wire;
 
     fulladder adder31 (
         .A      (in3[0]),
         .B      (in3[1]),
         .cin    (in3[2]),
-        .S      (in4[0]),
-        .cout   (cout[9])
+        .S      (in4_wire[0]),
+        .cout   (cout_wire[2])
     );
     fulladder adder32 (
         .A      (in3[3]),
         .B      (cin[5]),
         .cin    (cin[6]),
-        .S      (in4[1]),
-        .cout   (cout[10])
+        .S      (in4_wire[1]),
+        .cout   (cout_wire[3])
     );
+    
+    wire [3:0] cout_wire;
+    wire [1:0] in4;
+    reg  [1:0] in4_reg;
+    reg  [3:0] cout_reg;
+
+    always @(posedge mul_clk) begin
+        if (reset) begin
+            in4_reg <= 2'b0;
+            cout_reg <= 4'b0;
+        end
+        else if (mul) begin
+            in4_reg <= in4_wire;
+            cout_reg <= {cout_wire[3], cout_wire[2], cout_wire[1], cout_wire[0]};
+        end
+    end
+    assign {cout[10], cout[9], cout[8], cout[7]} = cout_reg;
+    assign in4 = in4_reg;
 
     wire [1:0] in5;
     fulladder adder41 (
