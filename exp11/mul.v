@@ -156,6 +156,6 @@ module Mul(
         end
     end
 
-    assign result = product[63:0];
+    assign result = product_reg[63:0];
 
 endmodule
