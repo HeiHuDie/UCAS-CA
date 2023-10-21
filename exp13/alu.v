@@ -64,8 +64,7 @@ wire [63:0] sr64_result;
 wire [31:0] sr_result;
 wire [31:0] mod_result;
 wire [31:0] div_result;
-wire [63:0] signed_mul_result;
-wire [63:0] unsigned_mul_result;
+wire [63:0] mul_result;
 // 32-bit adder
 wire [31:0] adder_a;
 wire [31:0] adder_b;
@@ -104,9 +103,20 @@ assign sll_result = alu_src1 << alu_src2[4:0];   //rj << i5 //
 assign sr64_result = {{32{op_sra & alu_src1[31]}}, alu_src1[31:0]} >> alu_src2[4:0]; //rj >> i5 //
 
 assign sr_result   = sr64_result[31:0];//
-//mul
-assign signed_mul_result = $signed(alu_src1) * $signed(alu_src2);
-assign unsigned_mul_result = alu_src1 * alu_src2;
+//mul contorl
+wire mul_sel;
+wire mul_complete;
+assign mul_sel = op_mul | op_mulh | op_mulhu;
+Mul u_mul(
+    .mul_clk        (clk),
+    .reset          (reset),
+    .mul            (mul_sel),
+    .mul_signed     (op_mul | op_mulh),
+    .x              (alu_src1),
+    .y              (alu_src2),
+    .result         (mul_result),
+    .mul_complete   (mul_complete)
+);
 //div control
 wire div_sel;
 wire div_complete;
@@ -122,7 +132,7 @@ Div u_div(
     .r (mod_result),
     .div_complete(div_complete)
 );
-assign alu_complete = reset | ~div_sel | div_sel & div_complete;
+assign alu_complete = reset | (~div_sel & ~mul_sel) | div_sel & div_complete | mul_sel & mul_complete;
 // final result mux
 /**assign alu_result = ({32{op_add|op_sub}} & add_sub_result)
                   | ({32{op_slt       }} & slt_result)
@@ -152,8 +162,8 @@ assign alu_result = ({32{op_add|op_sub}} & add_sub_result)
                   | ({32{op_mod|op_modu}}& mod_result)
                   | ({32{op_div|op_divu}}& div_result);
 assign res_from_mul = op_mul | op_mulh | op_mulhu;
-assign mul_res = ({32{op_mul}}        & signed_mul_result[31:0])
-                | ({32{op_mulh}}       & signed_mul_result[63:32])
-                | ({32{op_mulhu}}      & unsigned_mul_result[63:32]);
+assign mul_res = ({32{op_mul}}        & mul_result[31:0])
+                | ({32{op_mulh}}       & mul_result[63:32])
+                | ({32{op_mulhu}}      & mul_result[63:32]);
 endmodule
 
