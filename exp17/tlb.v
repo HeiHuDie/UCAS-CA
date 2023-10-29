@@ -1,28 +1,29 @@
 
-/**ÃüÃûÖĞ¶ÔÓÚ¶ÌºáÏßºóµÄ×ÖÄ¸Ò»Ğ©ËµÃ÷
-´æÔÚÎ»(E)£¬1 ±ÈÌØ¡£Îª 1 ±íÊ¾ËùÔÚ TLB ±íÏî·Ç¿Õ£¬¿ÉÒÔ²ÎÓë²éÕÒÆ¥Åä¡£
+/**å‘½åä¸­å¯¹äºçŸ­æ¨ªçº¿åçš„å­—æ¯ä¸€äº›è¯´æ˜
+å­˜åœ¨ä½(E)ï¼Œ1 æ¯”ç‰¹ã€‚ä¸º 1 è¡¨ç¤ºæ‰€åœ¨ TLB è¡¨é¡¹éç©ºï¼Œå¯ä»¥å‚ä¸æŸ¥æ‰¾åŒ¹é…ã€‚
 
-µØÖ·¿Õ¼ä±êÊ¶(ASID)£¬10 ±ÈÌØ¡£µØÖ·¿Õ¼ä±êÊ¶ÓÃÓÚÇø·Ö²»Í¬½ø³ÌÖĞµÄÍ¬ÑùµÄĞéµØÖ·£¬±ÜÃâ½ø³ÌÇĞ»»Ê±Çå¿ÕÕû¸ö TLB Ëù´øÀ´µÄĞÔÄÜËğÊ§¡£²Ù×÷ÏµÍ³ÎªÃ¿¸ö½ø³Ì·ÖÅäÎ¨Ò»µÄ ASID£¬TLB ÔÚ½øĞĞ²éÕÒÊ±³ıµØÖ·ĞÅÏ¢ÍâÒ»ÖÂÍâ£¬»¹ĞèÒª±È¶Ô ASID ĞÅÏ¢¡£
+åœ°å€ç©ºé—´æ ‡è¯†(ASID)ï¼Œ10 æ¯”ç‰¹ã€‚åœ°å€ç©ºé—´æ ‡è¯†ç”¨äºåŒºåˆ†ä¸åŒè¿›ç¨‹ä¸­çš„åŒæ ·çš„è™šåœ°å€ï¼Œé¿å…è¿›ç¨‹åˆ‡æ¢æ—¶æ¸…ç©ºæ•´ä¸ª TLB æ‰€å¸¦æ¥çš„æ€§èƒ½æŸå¤±ã€‚æ“ä½œç³»ç»Ÿä¸ºæ¯ä¸ªè¿›ç¨‹åˆ†é…å”¯ä¸€çš„ ASIDï¼ŒTLB åœ¨è¿›è¡ŒæŸ¥æ‰¾æ—¶é™¤åœ°å€ä¿¡æ¯å¤–ä¸€è‡´å¤–ï¼Œè¿˜éœ€è¦æ¯”å¯¹ ASID ä¿¡æ¯ã€‚
 
-È«¾Ö±êÖ¾Î»(G)£¬1 ±ÈÌØ¡£µ±¸ÃÎ»Îª 1 Ê±£¬²éÕÒÊ±²»½øĞĞ ASID ÊÇ·ñÒ»ÖÂĞÔµÄ¼ì²é¡£µ±²Ù×÷ÏµÍ³ĞèÒªÔÚËùÓĞ½ø³Ì¼ä¹²ÏíÍ¬Ò»ĞéÄâµØÖ·Ê±£¬¿ÉÒÔÉèÖÃ TLB Ò³±íÏîÖĞµÄ G Î»ÖÃÎª 1¡£
+å…¨å±€æ ‡å¿—ä½(G)ï¼Œ1 æ¯”ç‰¹ã€‚å½“è¯¥ä½ä¸º 1 æ—¶ï¼ŒæŸ¥æ‰¾æ—¶ä¸è¿›è¡Œ ASID æ˜¯å¦ä¸€è‡´æ€§çš„æ£€æŸ¥ã€‚å½“æ“ä½œç³»ç»Ÿéœ€è¦åœ¨æ‰€æœ‰è¿›ç¨‹é—´å…±äº«åŒä¸€è™šæ‹Ÿåœ°å€æ—¶ï¼Œå¯ä»¥è®¾ç½® TLB é¡µè¡¨é¡¹ä¸­çš„ G ä½ç½®ä¸º 1ã€‚
 
-Ò³´óĞ¡(PS)£¬6 ±ÈÌØ¡£½öÔÚ MTLB ÖĞ³öÏÖ¡£ÓÃÓÚÖ¸¶¨¸ÃÒ³±íÏîÖĞ´æ·ÅµÄÒ³´óĞ¡¡£ÊıÖµÊÇÒ³´óĞ¡µÄ 2µÄÃİÖ¸Êı¡£ÁúĞ¾¼Ü¹¹ 32 Î»¾«¼ò°æÖ»Ö§³Ö 4KB ºÍ 4MB Á½ÖÖÒ³´óĞ¡£¬¶ÔÓ¦ TLB ±íÏîÖĞµÄ PS Öµ·Ö±ğÊÇ 12 ºÍ 21+1¡£
+é¡µå¤§å°(PS)ï¼Œ6 æ¯”ç‰¹ã€‚ä»…åœ¨ MTLB ä¸­å‡ºç°ã€‚ç”¨äºæŒ‡å®šè¯¥é¡µè¡¨é¡¹ä¸­å­˜æ”¾çš„é¡µå¤§å°ã€‚æ•°å€¼æ˜¯é¡µå¤§å°çš„ 2çš„å¹‚æŒ‡æ•°ã€‚é¾™èŠ¯æ¶æ„ 32 ä½ç²¾ç®€ç‰ˆåªæ”¯æŒ 4KB å’Œ 4MB ä¸¤ç§é¡µå¤§å°ï¼Œå¯¹åº” TLB è¡¨é¡¹ä¸­çš„ PS å€¼åˆ†åˆ«æ˜¯ 12 å’Œ 21+1ã€‚
 
-ĞéË«Ò³ºÅ(VPPN)£¬(VALEN-13)±ÈÌØ¡£ÔÚÁúĞ¾¼Ü¹¹ 32 Î»¾«¼ò°æÖĞ£¬Ã¿Ò»¸öÒ³±íÏî´æ·ÅÁËÏàÁÚµÄÒ»¶ÔÆæÅ¼ÏàÁÚÒ³±íĞÅÏ¢£¬ËùÒÔ TLB Ò³±íÏîÖĞ´æ·ÅĞéÒ³ºÅµÄÊÇÏµÍ³ÖĞĞéÒ³ºÅ/2 µÄÄÚÈİ£¬¼´ĞéÒ³ºÅµÄ×îµÍÎ»²»ĞèÒª´æ·ÅÔÚ TLB ÖĞ¡£²éÕÒ TLB Ê±ÔÚ¸ù¾İ±»²éÕÒĞéÒ³ºÅµÄ×îµÍÎ»¾ö¶¨ÊÇÑ¡ÔñÆæÊıºÅÒ³»¹ÊÇÅ¼ÊıºÅÒ³µÄÎïÀí×ª»»ĞÅÏ¢¡£
+è™šåŒé¡µå·(VPPN)ï¼Œ(VALEN-13)æ¯”ç‰¹ã€‚åœ¨é¾™èŠ¯æ¶æ„ 32 ä½ç²¾ç®€ç‰ˆä¸­ï¼Œæ¯ä¸€ä¸ªé¡µè¡¨é¡¹å­˜æ”¾äº†ç›¸é‚»çš„ä¸€å¯¹å¥‡å¶ç›¸é‚»é¡µè¡¨ä¿¡æ¯ï¼Œæ‰€ä»¥ TLB é¡µè¡¨é¡¹ä¸­å­˜æ”¾è™šé¡µå·çš„æ˜¯ç³»ç»Ÿä¸­è™šé¡µå·/2 çš„å†…å®¹ï¼Œå³è™šé¡µå·çš„æœ€ä½ä½ä¸éœ€è¦å­˜æ”¾åœ¨ TLB ä¸­ã€‚æŸ¥æ‰¾ TLB æ—¶åœ¨æ ¹æ®è¢«æŸ¥æ‰¾è™šé¡µå·çš„æœ€ä½ä½å†³å®šæ˜¯é€‰æ‹©å¥‡æ•°å·é¡µè¿˜æ˜¯å¶æ•°å·é¡µçš„ç‰©ç†è½¬æ¢ä¿¡æ¯ã€‚
 
-ÓĞĞ§Î»(V)£¬1 ±ÈÌØ¡£Îª 1 ±íÃ÷¸ÃÒ³±íÏîÊÇÓĞĞ§µÄÇÒ±»·ÃÎÊ¹ıµÄ¡£
+æœ‰æ•ˆä½(V)ï¼Œ1 æ¯”ç‰¹ã€‚ä¸º 1 è¡¨æ˜è¯¥é¡µè¡¨é¡¹æ˜¯æœ‰æ•ˆçš„ä¸”è¢«è®¿é—®è¿‡çš„ã€‚
 
-ÔàÎ»(D)£¬1 ±ÈÌØ¡£Îª 1 ±íÊ¾¸ÃÒ³±íÏîËù¶ÔÓ¦µÄµØÖ··¶Î§ÄÚÒÑÓĞÔàÊı¾İ¡£
+è„ä½(D)ï¼Œ1 æ¯”ç‰¹ã€‚ä¸º 1 è¡¨ç¤ºè¯¥é¡µè¡¨é¡¹æ‰€å¯¹åº”çš„åœ°å€èŒƒå›´å†…å·²æœ‰è„æ•°æ®ã€‚
 
-´æ´¢·ÃÎÊÀàĞÍ(MAT)£¬2 ±ÈÌØ¡£¿ØÖÆÂäÔÚ¸ÃÒ³±íÏîËùÔÚµØÖ·¿Õ¼äÉÏ·Ã´æ²Ù×÷µÄ´æ´¢·ÃÎÊÀàĞÍ¡£
+å­˜å‚¨è®¿é—®ç±»å‹(MAT)ï¼Œ2 æ¯”ç‰¹ã€‚æ§åˆ¶è½åœ¨è¯¥é¡µè¡¨é¡¹æ‰€åœ¨åœ°å€ç©ºé—´ä¸Šè®¿å­˜æ“ä½œçš„å­˜å‚¨è®¿é—®ç±»å‹ã€‚
 
-ÌØÈ¨µÈ¼¶£¨PLV£©£¬2 ±ÈÌØ¡£¸ÃÒ³±íÏî¶ÔÓ¦µÄÌØÈ¨µÈ¼¶¡£
+ç‰¹æƒç­‰çº§ï¼ˆPLVï¼‰ï¼Œ2 æ¯”ç‰¹ã€‚è¯¥é¡µè¡¨é¡¹å¯¹åº”çš„ç‰¹æƒç­‰çº§ã€‚
 
-ÎïÀíÒ³ºÅ(PPN)£¬(PALEN-12)±ÈÌØ¡£µ±Ò³´óĞ¡´óÓÚ 4KB µÄÊ±ºò£¬TLB ÖĞËù´æ·ÅµÄ PPN µÄ[PS-1:12]Î»¿ÉÒÔÊÇÈÎÒâÖµ
+ç‰©ç†é¡µå·(PPN)ï¼Œ(PALEN-12)æ¯”ç‰¹ã€‚å½“é¡µå¤§å°å¤§äº 4KB çš„æ—¶å€™ï¼ŒTLB ä¸­æ‰€å­˜æ”¾çš„ PPN çš„[PS-1:12]ä½å¯ä»¥æ˜¯ä»»æ„å€¼
 **/
-/**module tlb #(
+module tlb #(
     parameter TLBNUM = 16
-)(
+)
+(
     input  wire clk,
     
     input  wire [              18:0] s0_vppn,
@@ -85,76 +86,8 @@
     output wire [               1:0] r_mat1,
     output wire                      r_d1,
     output wire                      r_v1
-);**/
-module tlb
-#(
-parameter TLBNUM = 16
-)
-(
-input wire clk,
-// search port 0 (for fetch)
-input wire [ 18:0] s0_vppn,
-input wire s0_va_bit12,
-input wire [ 9:0] s0_asid,
-output wire s0_found,
-output wire [$clog2(TLBNUM)-1:0] s0_index,
-output wire [ 19:0] s0_ppn,
-output wire [ 5:0] s0_ps,
-output wire [ 1:0] s0_plv,
-output wire [ 1:0] s0_mat,
-output wire s0_d,
-output wire s0_v,
-// search port 1 (for load/store)
-input wire [ 18:0] s1_vppn,
-input wire s1_va_bit12,
-input wire [ 9:0] s1_asid,
-output wire s1_found,
-output wire [$clog2(TLBNUM)-1:0] s1_index,
-output wire [ 19:0] s1_ppn,
-output wire [ 5:0] s1_ps,
-output wire [ 1:0] s1_plv,
-output wire [ 1:0] s1_mat,
-output wire s1_d,
-output wire s1_v,
-// invtlb opcode
-input wire invtlb_valid,
-input wire [ 4:0] invtlb_op,
-// write port
-input wire we, //w(rite) e(nable)
-input wire [$clog2(TLBNUM)-1:0] w_index,
-input wire w_e,
-input wire [ 18:0] w_vppn,
-input wire [ 5:0] w_ps,
-input wire [ 9:0] w_asid,
-input wire w_g,
-input wire [ 19:0] w_ppn0,
-input wire [ 1:0] w_plv0,
-input wire [ 1:0] w_mat0,
-input wire w_d0,
-input wire w_v0,
-input wire [ 19:0] w_ppn1,
-input wire [ 1:0] w_plv1,
-input wire [ 1:0] w_mat1,
-input wire w_d1,
-input wire w_v1,
-// read port
-input wire [$clog2(TLBNUM)-1:0] r_index,
-output wire r_e,
-output wire [ 18:0] r_vppn,
-output wire [ 5:0] r_ps,
-output wire [ 9:0] r_asid,
-output wire r_g,
-output wire [ 19:0] r_ppn0,
-output wire [ 1:0] r_plv0,
-output wire [ 1:0] r_mat0,
-output wire r_d0,
-output wire r_v0,
-output wire [ 19:0] r_ppn1,
-output wire [ 1:0] r_plv1,
-output wire [ 1:0] r_mat1,
-output wire r_d1,
-output wire r_v1
 );
+
 
 reg [TLBNUM-1:0] tlb_e;
 reg [TLBNUM-1:0] tlb_ps4MB; //pagesize 1:4MB, 0:4KB
@@ -175,7 +108,7 @@ reg        tlb_d1   [TLBNUM-1:0];
 reg        tlb_v1   [TLBNUM-1:0];
 wire s1_page;
 
-//---------²éÕÒ-----------
+//---------æŸ¥æ‰¾-----------
 //match
 wire [TLBNUM-1:0] match0;
 wire [TLBNUM-1:0] match1;
@@ -244,7 +177,7 @@ assign s1_mat = s1_page ? tlb_mat1[s1_index] : tlb_mat0[s1_index];
 assign s1_d = s1_page ? tlb_d1  [s1_index] : tlb_d0  [s1_index];
 assign s1_v = s1_page ? tlb_v1  [s1_index] : tlb_v0  [s1_index];
 
-//---------Ğ´Èë-----------
+//---------å†™å…¥-----------
 wire [TLBNUM-1:0] mask [31:0];
 integer j;
 always @ (posedge clk) begin
@@ -265,7 +198,7 @@ always @ (posedge clk) begin
         tlb_d1     [w_index] <= w_d1;
         tlb_v1     [w_index] <= w_v1;
     end else if(invtlb_valid) begin
-        tlb_e <= tlb_e & mask[invtlb_op];//Ê¹ÓÃÑÚÂëÊµÏÖEµÄÎŞĞ§»¯
+        tlb_e <= tlb_e & mask[invtlb_op];//ä½¿ç”¨æ©ç å®ç°Eçš„æ— æ•ˆåŒ–
     end 
 end
 
@@ -295,7 +228,8 @@ generate
         assign mask[i] = 16'hffff;
     end
 endgenerate
-//---------¶ÁÈ¡-----------
+
+//---------è¯»å–-----------
 assign r_e    = tlb_e    [r_index];
 assign r_vppn = tlb_vppn [r_index];
 assign r_ps   = tlb_ps4MB[r_index] ? 6'd22 : 6'd12;
