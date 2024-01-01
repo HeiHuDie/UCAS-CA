@@ -93,7 +93,7 @@ wire way0_hit, way1_hit, cache_hit;
 
 wire [127:0] replace_data;
 reg          replace_way;
-wire         relpace_d;
+wire         replace_d;
 wire [ 19:0] replace_tag;
 
 wire [31:0] way0_load_word, way1_load_word, load_res;
@@ -390,7 +390,7 @@ end
 // read req at M_MISS & return at M_REPLACE
 assign replace_data = replace_way ? way1_data : way0_data;
 assign replace_tag  = replace_way ? way1_tag : way0_tag;
-assign relpace_d    = replace_way ? (way1_v & way1_d) : (way0_v & way0_d);
+assign replace_d    = replace_way ? (way1_v & way1_d) : (way0_v & way0_d);
 
 // LFSR (design book hasn't specify the design of LFSR?)
 always @(posedge clk)begin
@@ -439,7 +439,7 @@ always @(posedge clk)begin
         wr_req_r <= 1'b0;
     end
 end
-assign wr_req = wr_req_r & relpace_d;
+assign wr_req = wr_req_r & replace_d;
 assign wr_type = 3'b100;
 assign wr_addr = {replace_tag, rb_index, 4'b0};
 assign wr_wstrb = 4'b0;
